@@ -65,7 +65,7 @@ Aujourd’hui, j’ai créé mon dépôt GitHub, cloné le dépôt localement, c
 
    * Création d’un fichier `.gitignore` pour ignorer `.DS_STORE` sur macOS.(Si dans le futur je passe à macOS.)
 
-7. **Création d’un tag avant**
+7. **Création d’un tag**
    * git tag [-a] [-m message] <tagname> [commit]
    * Tag `gitinto` avec le message `"version finie intro git"`
    * Vérification que le tag est bien visible sur GitHub après push.
