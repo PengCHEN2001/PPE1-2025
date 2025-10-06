@@ -18,7 +18,7 @@ Aujourd’hui, j’ai créé mon dépôt GitHub, cloné le dépôt localement, c
 
 
 3. **Récupération du dépôt sur la machine locale**
-   * Créer une copie locale du dépôt distant sur ma machine :
+   * Comment créer une copie locale du dépôt distant sur ma machine :
    * Clonage via SSH : Copier l’URL SSH (cela permet de publier mes modifications, GitHub ne supporte plus HTTPS pour push).
      ```bash
      mkdir -p ~/cours/plurital
