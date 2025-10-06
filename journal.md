@@ -69,3 +69,5 @@ Aujourd’hui, j’ai créé mon dépôt GitHub, cloné le dépôt localement, c
    * git tag [-a] [-m message] <tagname> [commit]
    * Tag `gitinto` avec le message `"version finie intro git"`
    * __!! Pour envoyer les tags, il faut faire : git push origin --tags  ， git push pousse que les commits.!!__ 
+
+  * Pour les notes des deux premiers cours, consulte la plateforme "Notion".
