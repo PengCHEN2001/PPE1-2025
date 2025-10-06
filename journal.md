@@ -38,7 +38,7 @@ Aujourd’hui, j’ai créé mon dépôt GitHub, cloné le dépôt localement, c
    * Travailler localement ： Ouvrir le fichier sur l'ordinateur. Ajouter des notes. 
 
 5. **Synchronisation avec le dépôt distant**
-    Ce que j'ai fait : 
+   * Ce que j'ai fait : 
    * Vérification de l’état avec `git status` et `git log`.
       * git status :  vérifier les fichiers modifiés
       * git log : affiche l’historique des commits du dépôt. Montre qui a modifié quoi et quand. (appuie sur "q" pour sortir du log si necessaire)
