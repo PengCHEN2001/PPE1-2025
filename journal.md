@@ -54,8 +54,8 @@ Aujourd’hui, j’ai créé mon dépôt GitHub, cloné le dépôt localement, c
    * `git pull` : récupère les dernières modifications du dépôt distant et les intègre dans le dépôt local.
      * quand on utilise? Avant de commencer à travailler, en collabaration, travailler sur plusieur pc. 
 
-   * __Avant de  `git commit -m` ,si c’est la première fois, il faut configurer votre nom et votre email__
-   eg. git config user.email "sslchenpeng@gmail.com" et git config user.name "PengCHEN"
+   * __Avant de  `git commit -m` ,si c’est la première fois qu'on utilise ce dépôt sur cet ordinateur, il faut configurer votre nom et votre email__
+   * eg. git config user.email "sslchenpeng@gmail.com" et git config user.name "PengCHEN"
         * `git config user.email ` vs `git config --global user.email` ? 
         * git config user.email → configure l’email seulement pour ce dépôt
         git config --global user.email → configure l’email pour tous les dépôts sur cette machine
