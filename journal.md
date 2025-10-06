@@ -32,7 +32,7 @@ Aujourd’hui, j’ai créé mon dépôt GitHub, cloné le dépôt localement, c
      * __git status : affiche l’état des fichiers dans le dépôt (modifiés, non suivis, etc.).__
 
 4. **Création et modification du journal de bord (`journal.md`)**
-   * Le journal de bord est un fichier markdown, https://www.markdownguide.org/cheat-sheet.
+   * Le journal de bord est un fichier markdown, https://markdownguide.offshoot.io/cheat-sheet/.
    * "Le journal de bord vous servira tout au long de cette unité d’enseignement, vous devrez y écrire régulièrement pour faire part de votre avancement. Vous devrez y indiquer notamment les problèmes que vous avez rencontrés et les solutions que vous avez trouvées."
    * git pull
    * Travailler localement ： Ouvrir le fichier sur l'ordinateur. Ajouter des notes. 
@@ -68,5 +68,4 @@ Aujourd’hui, j’ai créé mon dépôt GitHub, cloné le dépôt localement, c
 7. **Création d’un tag**
    * git tag [-a] [-m message] <tagname> [commit]
    * Tag `gitinto` avec le message `"version finie intro git"`
-   * Vérification que le tag est bien visible sur GitHub après push.
    * __!! Pour envoyer les tags, il faut faire : git push origin --tags  ， git push pousse que les commits.!!__ 
