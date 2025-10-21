@@ -1,15 +1,22 @@
 #!/usr/bin/bash
 
+# methode 1
+# echo "Nombre de lieux en 2016:"
+# cat 2016/*.ann | grep Location | wc -l
+#
+# echo "Nombre de lieux en 2017:"
+# cat 2017/*.ann | grep Location | wc -l
+#
+# echo "Nombre de lieux en 2018:"
+# cat 2018/*.ann | grep Location | wc -l
 
-echo "Nombre de lieux en 2016:"
-cat 2016/*.ann | grep Location | wc -l
+# methode 2 boucle
 
-echo "Nombre de lieux en 2017:"
-cat 2017/*.ann | grep Location | wc -l
+datadir="/home/pengc/Exercice1/ann"
 
-echo "Nombre de lieux en 2018:"
-cat 2018/*.ann | grep Location | wc -l
-
-
-
+for annee in 2016 2017 2018
+do
+    echo "Nombre de lieux en $annee:"
+    grep -h "Location" "$datadir/$annee"/*/*.ann | wc -l
+done
 

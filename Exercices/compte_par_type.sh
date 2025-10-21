@@ -12,6 +12,6 @@ if [[ ! "$type_entie" =~ ^(Location|Date|Person|Organization|Hour|Product|Event)
     exit 1
 fi
 
-chemin_file="/home/pengc/Exercice11/ann/$annee/*/*.ann"
+chemin_file="/home/pengc/Exercice1/ann/$annee/*/*.ann"
 nombre=$(cat $chemin_file | grep -w "$type_entie" | wc -l)
 echo $nombre
