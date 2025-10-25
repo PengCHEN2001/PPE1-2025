@@ -1,10 +1,20 @@
+1	https://fr.wikipedia.org/wiki/Robot	200		13501
+2	https://fr.wikipedia.org/wiki/Robot_de_cuisine	200		4024
+3	https://fr.wikipedia.org/wiki/Robot_d%27indexation	200		5344
+4	https://fr.wikipedia.org/wiki/Bot_informatique	200		264
+5	https://fr.wikipedia.org/wiki/Atlas_(robot)	429		264
+6	https://roboty.magistry.fr			0
+7	https://fr.wikipedia.org/wiki/Robot_(Leonard_de_Vinci)	404		264
+8	https://fr.wiktionary.org/wiki/robot	429		17532
+9	https://fr.wikipedia.org/wiki/Protocole_d%27exclusion_des_robots	429		264
+10	https://fr.wikipedia.org/wiki/Robotique	429		264
 1	https://fr.wikipedia.org/wiki/Robot	200	UTF-8	13501
 2	https://fr.wikipedia.org/wiki/Robot_de_cuisine	200	UTF-8	4024
-3	https://fr.wikipedia.org/wiki/Robot_d%27indexation	200	UTF-8	5346
+3	https://fr.wikipedia.org/wiki/Robot_d%27indexation	200	UTF-8	5344
 4	https://fr.wikipedia.org/wiki/Bot_informatique	200	utf-8	264
-5	https://fr.wikipedia.org/wiki/Atlas_(robot)	429	utf-8	3950
+5	https://fr.wikipedia.org/wiki/Atlas_(robot)	429	utf-8	264
 6	https://roboty.magistry.fr			0
-7	https://fr.wikipedia.org/wiki/Robot_(Leonard_de_Vinci)	429	utf-8	2282
+7	https://fr.wikipedia.org/wiki/Robot_(Leonard_de_Vinci)	404	utf-8	264
 8	https://fr.wiktionary.org/wiki/robot	429	utf-8	264
-9	https://fr.wikipedia.org/wiki/Protocole_d%27exclusion_des_robots	429	UTF-8	264
+9	https://fr.wikipedia.org/wiki/Protocole_d%27exclusion_des_robots	200	utf-8	264
 10	https://fr.wikipedia.org/wiki/Robotique	429	utf-8	264
