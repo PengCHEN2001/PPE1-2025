@@ -12,7 +12,6 @@ fi
 compteur=1
 while read -r line;
 do
-	line=$(echo "$line" | tr -d '\r')
 	if [[ ! $line =~ ^https?:// ]]; then
     line="https://$line"
 	fi
@@ -20,17 +19,26 @@ do
 	# reperer les codes HTTP de réponse à la requête
 	httpcode=$(curl -I -s -L $line | grep "HTTP/" | cut -d' ' -f2)  # -L permet aussi " les erreurs peuvent être corrigées"
 
-	encodage=$(curl -s -I -L $line | grep "content-type:" | cut -d'=' -f2)
-	nombremot=$(curl -s -L $line | wc -w)
+	if [[ $httpcode == "200" ]]; then
+		encodage=$(curl -s -I -L $line | grep "content-type:" | cut -d'=' -f2)
+		# finalement, j'ai trouvé  où se trouve le problème
+		# le décalage des colonnes était dû au fait que encodage contient un retour chariot \r après "UTF-8".
+		encodage=$(echo $encodage | tr -d '\r')
 
-	# finalement, j'ai trouvé  où se trouve le problème
-	# le décalage des colonnes était dû au fait que encodage contient un retour chariot \r après "UTF-8".
-	encodage=$(echo "$encodage" | tr -d '\r')
+		if [[ $encodage == "UTF-8" || $encodage == "utf-8" ]] ; then
+			nombremot=$(curl -s -L $line | wc -w)
+		else
+			nombremot="non UFT8"
+		fi
+		echo "${compteur}	${line}	${httpcode}	${encodage}	${nombremot}" # taper directement tab (pas visible sur l'écran)
+	elif [[ $httpcode == "429" ]];then
+		echo "${compteur}	${line}	${httpcode}	too many request"
+	else
+		echo "${compteur}	${line}	${httpcode}	page inaccessible"
+	fi
 
-	echo "${compteur}	${line}	${httpcode}	${encodage}	${nombremot}" # taper directement tab (pas visible sur l'écran)
 	compteur=$(expr $compteur + 1)
-done < "$urlfile" >> "../tableaux/tableau-fr.tsv"
-
+done < "$urlfile" > "../tableaux/tableau-fr.tsv"
 
 # pourquoi on utilise pas 'cat'? cat urls.txt | while read ..
 # à cause du `| pipe` , la boucle while fonctionne dans un processus séparé. Quand while termine, la variable ou `resultat` reste dedans
