@@ -1,5 +1,6 @@
 # Journal de bord du projet encadré
 <!-- TOC -->- CTRL+ALT+A -->creat table of content
+Ce journal est d'aboard  écrit sur NOTION, puis 'copy-coller', et modifié sur vscodium.
 - [Journal de bord du projet encadré](#journal-de-bord-du-projet-encadré)
 - [SEANCE 1 et 2 :](#seance-1-et-2-)
     - [SSH Key et GitHub](#ssh-key-et-github)
@@ -43,6 +44,7 @@
   - [wget et cURL](#wget-et-curl)
     - [http vs https ？](#http-vs-https-)
     - [Comment comprendre  `entête` ?](#comment-comprendre--entête-)
+
 
 
 
@@ -953,16 +955,15 @@ Dans notre cas, la différence principale entre les deux commandes et que wget �
 
 curl <URL>
 
-Quelques options utiles :
-• -i : va donner des informations sur l’interaction avec le serveur
-• -L : suit les redirections
-• -o <fichier> : indique un <fichier> de sortie
-• s : mode silencieux, n’affiche pas la progression ni les messages d’erreur.
-• I : afficher que le head
-• w : écrit des informations spécifiques, par exemple le code HTTP %{http_code}, sans afficher le contenu de la page.
+Quelques options utiles :  
+•-i : va donner des informations sur l’interaction avec le serveur  
+•-L : suit les redirections  
+• -o <fichier> : indique un <fichier> de sortie  
+• s : mode silencieux, n’affiche pas la progression ni les messages d’erreur.  
+• I : affiche que le head  
+• w : écrit des informations spécifiques, par exemple le code HTTP %{http_code}, sans afficher le contenu de la page.  
 
-reference: https://blog.csdn.net/angle_chen123/article/details/120675472 
-
+reference: https://blog.csdn.net/angle_chen123/article/details/120675472  
 https://www.runoob.com/linux/linux-comm-curl.html
 ```bash
 httpcode=$(curl -I -s -L $line | grep "HTTP/" | cut -d' ' -f2)
