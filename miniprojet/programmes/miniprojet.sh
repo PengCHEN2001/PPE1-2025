@@ -1,12 +1,12 @@
 #!/usr/bin/bash
 
 urlfile=$1
+FICHIER_SORTIE=$2
 
-if [ $# -ne 1 ]; # si le nombre de ‘argument du script n’est pas 1
+if [ $# -ne 2 ];         # ../urls/fr.txt     ../tableaux/tableau-fr.tsv
 then
-    echo "Erreur: aucun argument fourni."
-	echo "Veuillez donner un argument du fichier texte."
-	exit1
+	echo "Erreur: Veuillez donner deux arguments : le chemin vers le fichier d'URL et le chemin vers le ficher_sortie  où se stock"
+	exit 1
 fi
 
 compteur=1
@@ -26,22 +26,22 @@ do
 		encodage=$(echo $encodage | tr -d '\r')
 
 		if [[ $encodage == "UTF-8" || $encodage == "utf-8" ]] ; then
-			nombremot=$(curl -s -L $line | wc -w)
+			nombremot=$(curl -s -L $line | lynx -dump -stdin -nolist | wc -w)
 		else
-			nombremot="non UFT8"
+			nombremot="non UTF-8"
 		fi
 		echo "${compteur}	${line}	${httpcode}	${encodage}	${nombremot}" # taper directement tab (pas visible sur l'écran)
 	elif [[ $httpcode == "429" ]];then
-		echo "${compteur}	${line}	${httpcode}	too many request"
+		echo -e "${compteur}\t${line}\t${httpcode}	too many request"
 	else
-		echo "${compteur}	${line}	${httpcode}	page inaccessible"
+		echo -e "${compteur}\t${line}\t${httpcode}	page inaccessible"
 	fi
 
 	compteur=$(expr $compteur + 1)
-done < "$urlfile" > "../tableaux/tableau-fr.tsv"
+done < "$urlfile" > "$FICHIER_SORTIE"
 
-# pourquoi on utilise pas 'cat'? cat urls.txt | while read ..
-# à cause du `| pipe` , la boucle while fonctionne dans un processus séparé. Quand while termine, la variable ou `resultat` reste dedans
+# data=$(curl -I -w -s -o /dev/null "%{http_code}\t%{content_type}" $line)
+# la corrections du cours nous a propose cette methode (上)
 
 #httpcode=$(curl -s -o /dev/null -w "%{http_code}" $line)
 # reference : slides en cours, https://blog.csdn.net/angle_chen123/article/details/120675472 ,https://www.runoob.com/linux/linux-comm-curl.html
