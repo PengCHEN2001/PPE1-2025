@@ -5,9 +5,18 @@ FICHIER_SORTIE=$2
 
 if [ $# -ne 2 ];         # ../urls/fr.txt     ../tableaux/tableau-fr.tsv
 then
-	echo "Erreur: Veuillez donner deux arguments : le chemin vers le fichier d'URL et le chemin vers le ficher_sortie  où se stock"
+	echo "Erreur: Veuillez donner deux arguments : le chemin vers le fichier d'URL et le chemin vers le ficher_sortie où se stock tableau-fr.html"
 	exit 1
 fi
+
+echo "<html>" > "$FICHIER_SORTIE"
+echo "  <head><meta charset=\"UTF-8\" /></head>" >> "$FICHIER_SORTIE"
+echo "  <body>" >> "$FICHIER_SORTIE"
+echo "    <table>" >> "$FICHIER_SORTIE"
+echo "      <tr><th>Numero</th><th>URL</th><th>Code HTTP</th><th>Encodage</th><th>Nombre de mots</th></tr>" >> "$FICHIER_SORTIE"
+echo
+#ou utiliser une methode cat <<X > FILENAME ... X, X est normalement EOF ou on lui donne un nom. Cette permet à écrire sur plusieurs ligne avec une seule commande cat.
+
 
 compteur=1
 while read -r line;
@@ -30,15 +39,25 @@ do
 		else
 			nombremot="non UTF-8"
 		fi
-		echo "${compteur}	${line}	${httpcode}	${encodage}	${nombremot}" # taper directement tab (pas visible sur l'écran)
+
+		echo "      <tr><td>${compteur}</td><td>${line}</td><td>${httpcode}</td><td>${encodage}</td><td>${nombremot}</td></tr>"  >> "$FICHIER_SORTIE"
 	elif [[ $httpcode == "429" ]];then
-		echo -e "${compteur}\t${line}\t${httpcode}	too many request"
+		echo "      <tr><td>${compteur}</td><td>${line}</td><td>${httpcode}</td><td>too many request</td><td>-</td></tr>"  >> "$FICHIER_SORTIE"
 	else
-		echo -e "${compteur}\t${line}\t${httpcode}	page inaccessible"
+		echo "      <tr><td>${compteur}</td><td>${line}</td><td>${httpcode}</td><td>page inaccessible</td><td>-</td></tr>"  >> "$FICHIER_SORTIE"
 	fi
 
 	compteur=$(expr $compteur + 1)
-done < "$urlfile" > "$FICHIER_SORTIE"
+done < "$urlfile"
+
+cat <<HTML >> "$FICHIER_SORTIE"
+    </table>
+  </body>
+</html>
+HTML
+
+
+
 
 # data=$(curl -I -w -s -o /dev/null "%{http_code}\t%{content_type}" $line)
 # la corrections du cours nous a propose cette methode (上)
