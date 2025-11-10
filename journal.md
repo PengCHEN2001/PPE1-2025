@@ -1,10 +1,8 @@
 # Journal de bord du projet encadré
 <!-- TOC -->
+Ce journal (aussi mes notes pour ce cours) est d'abord écrit sur la plateforme `NOTION`, puis "copier-coller", et modifié sur vscodium.
 
 CTRL+ALT+A -->creat table of content
-Ce journal est d'aboard  écrit sur NOTION, puis 'copy-coller', et modifié sur vscodium.
-Markdown: Creat Table of Content
-
 - [Journal de bord du projet encadré](#journal-de-bord-du-projet-encadré)
 - [SEANCE 1 et 2 :](#seance-1-et-2-)
     - [SSH Key et GitHub](#ssh-key-et-github)
@@ -48,7 +46,10 @@ Markdown: Creat Table of Content
   - [wget et cURL](#wget-et-curl)
     - [http vs https ？](#http-vs-https-)
     - [Comment comprendre  `entête` ?](#comment-comprendre--entête-)
-
+- [05/11/2025 seance 6 HTML](#05112025-seance-6-html)
+  - [Presentation de HTML](#presentation-de-html)
+  - [**Du balisage, à quoi ça ressemble ?**](#du-balisage-à-quoi-ça-ressemble-)
+  - [html : creer un tableau](#html--creer-un-tableau)
 
 
 
