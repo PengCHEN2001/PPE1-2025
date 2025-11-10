@@ -1,6 +1,10 @@
 # Journal de bord du projet encadré
-<!-- TOC -->- CTRL+ALT+A -->creat table of content
+<!-- TOC -->
+
+CTRL+ALT+A -->creat table of content
 Ce journal est d'aboard  écrit sur NOTION, puis 'copy-coller', et modifié sur vscodium.
+Markdown: Creat Table of Content
+
 - [Journal de bord du projet encadré](#journal-de-bord-du-projet-encadré)
 - [SEANCE 1 et 2 :](#seance-1-et-2-)
     - [SSH Key et GitHub](#ssh-key-et-github)
@@ -1003,3 +1007,180 @@ curl -L -i -o output.txt google.com
 - L’`entête` HTTP n’est pas le **contenu principal** de la page (HTML, texte, images…).
 - C’est **des informations supplémentaires (métadonnées)** fournies avec la page pour le navigateur ou le client.
 - Informations courantes dans l’`entête`
+
+# 05/11/2025 seance 6 HTML
+
+Ce qu’on a fait ajd :
+
+pour la premiere moitié  du cours:
+
+la correction de miniprojet
+
+Pourquoi on utilise pas 'cat'? cat urls.txt | while read ..
+
+```bash
+echo "Je suis un fichier
+  sur plusieurs lignes > test.txt
+
+cat test.txt 
+Je suis un fichier
+sur plusieurs 
+
+for machin in $(cat test.txt)
+do
+	echo $machin
+	done
+Je 
+suis 
+un
+fichier
+...
+```
+
+echo -e “${numero}\t${line}”    # si y a les caracteres speciaux , on met echo -e 
+
+| Séquence | Nom | Effet visuel |
+| --- | --- | --- |
+| `\r` | retour chariot (carriage return) | le curseur **revient au début de la ligne actuelle**, sans descendre |
+| `\n` | saut de ligne (line feed / newline) | le curseur **descend à la ligne suivante**, sans revenir au début |
+| `\r\n` | retour chariot + saut de ligne | revient au début **et** descend → **nouvelle ligne complète**  |
+
+Imaginons que tu tapes ceci (le `|` montre la position du curseur) :
+
+Hello|
+
+- Si tu fais `\r`, le curseur revient ici :
+    
+    |Hello       (le texte suivant écrira **par-dessus** “Hello”)
+    
+- Si tu fais `\n`, tu descends à la ligne suivante :
+    
+    Hello
+    |
+    
+
+```bash
+mkdir “un dossier”  ——> creer un dossier qui s’appelle “un dossier”
+mkdir un dossier ——> creer deux dossiers , qui s’appllenet “un” et “dossier”
+# Parce que dans Bash, l’espace sépare les arguments.
+# Les guillemets " " disent au shell : “tout ça est un seul argument”.
+
+ls “un dossier” = ls un\ dossier/
+ls "un dossier" → guillemets pour englober tout le nom
+ls un\ dossier → le backslash \ “échappe” l’espace pour dire “ne coupe pas ici”
+ls un dossier → afficher separemment le contenu de deux dossiers “un” et “dossier”
+```
+
+pour une addresse “[fr.wikipedia.org/wiki/Robot_d'indexation](http://fr.wikipedia.org/wiki/Robot_d%27indexation)” , on fait une redirection.
+
+methode du prof:
+
+data=$(curl -I -w -s -o /dev/null "%{http_code}\t%{content_type}" $line)
+
+grep -E -o “charset=.*” | cut -d= -f2
+
+- -E : active les expressions régulières étendues.
+- -o : n’affiche que la partie qui correspond au motif.
+- "charset=.*" : motif qui capture “charset=” suivi de n’importe quels caractères jusqu’à la fin de la ligne.
+
+si on veut afficher  le nombre de mots dans la page, on utilise le 2eme
+
+| Commande | Que fait-elle ? | Compte quoi ? |
+| --- | --- | --- |
+| `curl url \| wc -w` | Télécharge HTML brut | Tous les mots du code (y compris balises & métadonnées) |
+| `curl url \| lynx -dump -stdin -nolist \| wc -w` | Affiche texte rendu | Mots du **contenu visible** |
+
+lynx -dump -stdin interprète le HTML comme un navigateur et affiche le texte visible (sans les balises, sans le code).
+
+-dump 不要进入交互模式，而是直接输出**页面的文本内容**。
+
+-stdin “从 stdin读取 HTML 内容，而不是从一个网址或文件。”
+
+-nolist    évite d’afficher les liens numérotés [1], [2], etc. à la fin.
+
+## Presentation de HTML
+
+introduce how html looks like and its syntax.
+
+HTML (**H**yper**T**ext **M**arkup **L**anguage) est un langage de balisage pour représenter des pages web. Format reconnu par tous les navigateurs.
+
+Permet de structurer l’information d’un page pour la rendre lisible :
+
+- Dérivé du SGML (**S**tandard **G**eneralized **M**arkup **L**anguage) et "frère" du XML
+- Permet de marquer des zones dans du contenu textuel
+- Ces zones fournissent structure et enrichissements
+
+## **Du balisage, à quoi ça ressemble ?**
+
+HTML définit des balises qui marquent explicitement le début et la fin d’une zone. On peut inclure des balises dans d’autres, mais pas de chevauchement
+
+3 types de balises
+
+- Ouvrantes : *<*balise*> →* le début d’une zone
+- Fermantes : *<*/balise*> →* la fin d’une zone
+- Autofermantes ou vides : *<*balise/*> →* position dans le document
+
+Les attributs d’une balise (donc du nœud) sont des couples clé/valeur renseignés sur la balise ouvrante ou autofermante :
+
+- *<*NP fct="SUJ"*>*
+- *<*DET G="M" N="S"*>*
+
+```xml
+#xml
+<SENT>
+	<NP fct="SUJ">
+		<DET G="M" N="S">Le</DET>
+		<NC G="M" N="S">chat</NC>
+	</NP>
+	<VN>
+		<V P="3" N="S">dort</V>
+	</VN>
+</SENT>
+```
+
+```html
+<html>
+	<head>
+		[...]
+		<meta charset="UTF-8" />
+		[...]
+	</head>
+	<body>...</body>
+</html>
+```
+
+- head : l’entête du fichier (avec les métadonnées)
+    
+    Une métadonnée particulière nous sera intéressante ici : l’encodage (charset)
+    
+- body : le corps du fichier (avec le contenu textuel et la structure)
+
+## html : creer un tableau
+
+Pour créer un tableau en HTML, nous avons besoin de 4 balises :
+
+- table : la balise racine du tableau  所有表格内容都放在里面
+- tr : ***t**able **r**ow*, une ligne (se place dans table)
+- th : ***t**able **h**eader*, une cellule d’entête (seulement la première ligne)
+- td : ***t**able **d**ata*, une cellule classique (toutes les lignes pas entête) 用于显示表格的普通数据
+
+On construit un tableau HTML **ligne par ligne** avec `<tr>`, en remplissant chaque ligne de `<th>` ou `<td>`.
+
+```html
+<table>
+	<tr><th>livre</th><th>taille</th></tr>
+	<tr>
+		<td>Du côté de chez Swann</td><td>1.0Mo</td>
+	</tr>
+	<tr>
+		<td>L’Assommoir</td><td>990 ko</td>
+	</tr>
+</table>
+```
+
+`<th>` représente le nom d’une colonne, et chaque `<td>` en dessous contient les données correspondantes.
+
+| **livre** | **taille** |
+| --- | --- |
+| Du côté de chez Swann | 1.0Mo |
+| L’Assommoir | 990 ko |
