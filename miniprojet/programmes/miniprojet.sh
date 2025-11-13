@@ -6,27 +6,33 @@ FICHIER_SORTIE=$2
 if [ $# -ne 2 ];         # ../urls/fr.txt     ../tableaux/tableau-fr.tsv
 then
 	echo "Erreur: Veuillez donner deux arguments : le chemin vers le fichier d'URL et le chemin vers le ficher_sortie où se stock tableau-fr.html"
-	exit 1
+	exit 1   #1表示立刻结束整个脚本的运行（不管下面还有多少代码）
 fi
 
-echo "<html>" > "$FICHIER_SORTIE"
-echo "  <head><meta charset=\"UTF-8\" /></head>" >> "$FICHIER_SORTIE"
-echo "  <body>" >> "$FICHIER_SORTIE"
-echo "    <table>" >> "$FICHIER_SORTIE"
-echo "      <tr><th>Numero</th><th>URL</th><th>Code HTTP</th><th>Encodage</th><th>Nombre de mots</th></tr>" >> "$FICHIER_SORTIE"
-echo
+echo "
+<html>
+<head>
+	<meta charset=\"UTF-8\" />
+</head>
+<body>
+<table>
+	<tr>
+		<th>Numero</th>
+		<th>URL</th>
+		<th>Code HTTP</th>
+		<th>Encodage</th>
+		<th>NBmots</th>
+	</tr>" >> "$FICHIER_SORTIE"
+
 #ou utiliser une methode cat <<X > FILENAME ... X, X est normalement EOF ou on lui donne un nom. Cette permet à écrire sur plusieurs ligne avec une seule commande cat.
 
 
 compteur=1
 while read -r line;
 do
-	if [[ ! $line =~ ^https?:// ]]; then
-    line="https://$line"
-	fi
-
 	# reperer les codes HTTP de réponse à la requête
-	httpcode=$(curl -I -s -L $line | grep "HTTP/" | cut -d' ' -f2)  # -L permet aussi " les erreurs peuvent être corrigées"
+	# httpcode=$(curl -I -s -L $line | grep "HTTP/" | cut -d' ' -f2)  # -L permet aussi " les erreurs peuvent être corrigées"
+	httpcode=$(curl -L -s -o /dev/null -w "%{http_code}" $line)
 
 	if [[ $httpcode == "200" ]]; then
 		encodage=$(curl -s -I -L $line | grep "content-type:" | cut -d'=' -f2)
@@ -40,22 +46,29 @@ do
 			nombremot="non UTF-8"
 		fi
 
-		echo "      <tr><td>${compteur}</td><td>${line}</td><td>${httpcode}</td><td>${encodage}</td><td>${nombremot}</td></tr>"  >> "$FICHIER_SORTIE"
+		echo "
+		<tr>
+			<td>${compteur}</td><td>${line}</td><td>${httpcode}</td><td>${encodage}</td><td>${nombremot}</td>
+		</tr>"  >> "$FICHIER_SORTIE"
 	elif [[ $httpcode == "429" ]];then
-		echo "      <tr><td>${compteur}</td><td>${line}</td><td>${httpcode}</td><td>too many request</td><td>-</td></tr>"  >> "$FICHIER_SORTIE"
+		echo "
+		<tr>
+			<td>${compteur}</td><td>${line}</td><td>${httpcode}</td><td>too many request</td><td>-</td>
+		</tr>"  >> "$FICHIER_SORTIE"
 	else
-		echo "      <tr><td>${compteur}</td><td>${line}</td><td>${httpcode}</td><td>page inaccessible</td><td>-</td></tr>"  >> "$FICHIER_SORTIE"
+		echo "
+		<tr>
+			<td>${compteur}</td><td>${line}</td><td>${httpcode}</td><td>page inaccessible</td><td>-</td>
+		</tr>"  >> "$FICHIER_SORTIE"
 	fi
 
 	compteur=$(expr $compteur + 1)
 done < "$urlfile"
 
-cat <<HTML >> "$FICHIER_SORTIE"
+echo "
     </table>
   </body>
-</html>
-HTML
-
+</html> " >> "$FICHIER_SORTIE"
 
 
 
