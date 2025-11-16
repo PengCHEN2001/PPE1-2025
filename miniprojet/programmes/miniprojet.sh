@@ -3,71 +3,93 @@
 urlfile=$1
 FICHIER_SORTIE=$2
 
-if [ $# -ne 2 ];         # ../urls/fr.txt     ../tableaux/tableau-fr.tsv
+if [ $# -ne 2 ];         # ../urls/fr.txt     ../tableaux/tableau-fr.html
 then
 	echo "Erreur: Veuillez donner deux arguments : le chemin vers le fichier d'URL et le chemin vers le ficher_sortie où se stock tableau-fr.html"
-	exit 1   #1表示立刻结束整个脚本的运行（不管下面还有多少代码）
+	exit 1   #1 indique que l'execution s'arret immediatement. 不管下面还有多少代码）
 fi
 
-echo "
+echo -e "
 <html>
 <head>
-	<meta charset=\"UTF-8\" />
+    <meta charset="UTF-8">
+    <title>Tableau des URLs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/versions/bulma-no-dark-mode.min.css">
 </head>
 <body>
-<table>
-	<tr>
-		<th>Numero</th>
-		<th>URL</th>
-		<th>Code HTTP</th>
-		<th>Encodage</th>
-		<th>NBmots</th>
-	</tr>" >> "$FICHIER_SORTIE"
+<section class="section has-background-grey">
+<div class="container has-background-white">
 
-#ou utiliser une methode cat <<X > FILENAME ... X, X est normalement EOF ou on lui donne un nom. Cette permet à écrire sur plusieurs ligne avec une seule commande cat.
+<div class="hero has-text-centered">
+  <div class="hero-body">
+    <h1 class="title">MiniProjet PPE — URLs Collectées</h1>
+  </div>
+</div>
+
+<nav class="tabs is-centered">
+  <ul>
+    <li><a href="../../index.html">Accueil</a></li>
+    <li class="is-active"><a href="tableau-fr.html">Tableau</a></li>
+  </ul>
+</nav>
+
+<div class="columns is-centered">
+  <div class="column is-two-thirds">
+    <div class="block">
+      <h3 class="title is-4 has-background-info has-text-white has-text-weight-semibold">Tableau des URL</h3>
+      <div class="table-container">
+        <table class="table is-bordered is-hoverable is-striped is-fullwidth">
+          <thead class="has-background-info has-text-white">
+            <tr>
+              <th>Numero</th>
+              <th>URL</th>
+              <th>Code HTTP</th>
+              <th>Encodage</th>
+              <th>Nombre de mots</th>
+            </tr>
+          </thead>" >> "$FICHIER_SORTIE"
 
 
-compteur=1
-while read -r line;
+
+
+lineno=1
+while read -r line
 do
-	# reperer les codes HTTP de réponse à la requête
-	# httpcode=$(curl -I -s -L $line | grep "HTTP/" | cut -d' ' -f2)  # -L permet aussi " les erreurs peuvent être corrigées"
-	httpcode=$(curl -L -s -o /dev/null -w "%{http_code}" $line)
+	data=$(curl -s -i -L -w "%{http_code}\n%{content_type}" -o ./.data.tmp $line)
+	http_code=$(echo "$data" | head -1)
+	encoding=$(echo "$data" | tail -1 | grep -Po "charset=\S+" | cut -d"=" -f2)
 
-	if [[ $httpcode == "200" ]]; then
-		encodage=$(curl -s -I -L $line | grep "content-type:" | cut -d'=' -f2)
-		# finalement, j'ai trouvé  où se trouve le problème
-		# le décalage des colonnes était dû au fait que encodage contient un retour chariot \r après "UTF-8".
-		encodage=$(echo $encodage | tr -d '\r')
-
-		if [[ $encodage == "UTF-8" || $encodage == "utf-8" ]] ; then
-			nombremot=$(curl -s -L $line | lynx -dump -stdin -nolist | wc -w)
-		else
-			nombremot="non UTF-8"
-		fi
-
-		echo "
-		<tr>
-			<td>${compteur}</td><td>${line}</td><td>${httpcode}</td><td>${encodage}</td><td>${nombremot}</td>
-		</tr>"  >> "$FICHIER_SORTIE"
-	elif [[ $httpcode == "429" ]];then
-		echo "
-		<tr>
-			<td>${compteur}</td><td>${line}</td><td>${httpcode}</td><td>too many request</td><td>-</td>
-		</tr>"  >> "$FICHIER_SORTIE"
-	else
-		echo "
-		<tr>
-			<td>${compteur}</td><td>${line}</td><td>${httpcode}</td><td>page inaccessible</td><td>-</td>
-		</tr>"  >> "$FICHIER_SORTIE"
+	if [ -z "${encoding}" ]
+	then
+		encoding="N/A" # petit raccourci qu'on peut utiliser à la place du if : encoding=${encoding:-"N/A"}
 	fi
 
-	compteur=$(expr $compteur + 1)
+	nbmots=$(cat ./.data.tmp | lynx -dump -nolist -stdin | wc -w)
+    echo -e "            <tr>
+                <td>$lineno</td>
+                <td>$line</td>
+                <td>$http_code</td>
+                <td>$encoding</td>
+                <td>$nbmots</td>
+            </tr>" >> "$FICHIER_SORTIE"
+
+    lineno=$((lineno + 1))
 done < "$urlfile"
 
 echo "
-    </table>
-  </body>
+		</table>
+      </div>
+    </div>
+    <p class="has-text-centered">
+      <a class="button is-link" href="../../index.html">Retour à l'accueil</a>
+    </p>
+  </div>
+</div>
+
+</div>
+</section>
+</body>
 </html> " >> "$FICHIER_SORTIE"
 
 

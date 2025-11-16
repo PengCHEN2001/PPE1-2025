@@ -1,12 +1,67 @@
 <html>
-
 <head>
-<meta charset="UTF-8" />
-<title>Programmation et Projet encadré</title>
+  <meta charset="UTF-8" />
+  <title>MiniProjet PPE25-26</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Peng CHEN">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/versions/bulma-no-dark-mode.min.css">
 </head>
 
 <body>
-<p>Page initiale du PPE.</p>
-</body>
+  <section class="section has-background-grey">
+    <div class="container has-background-white">
 
+      <div class="hero has-text-centered">
+        <div class="hero-body">
+          <h1 class="title">Miniprojet PPE — Récolter et analyser des URLs</h1>
+        </div>
+      </div>
+
+      <div class="columns">
+
+        <!-- Menu gauche -->
+        <div class="column is-2">
+          <aside class="menu">
+            <ul class="menu-list">
+              <li class="is-active"><a href="index.html">Accueil</a></li>
+              <li><a href="miniprojet/tableaux/tableau-fr.html">Tableau-URL</a></li>
+            </ul>
+          </aside>
+        </div>
+
+        <!-- Contenu principal -->
+        <div class="column">
+          <div class="box content has-background-warning-light content">
+
+            <h3 class="title is-4 has-text-white has-background-link has-text-weight-semibold">
+              Présentation du miniprojet
+            </h3>
+
+            <p>
+              Ce miniprojet vise à construire les pages HTML :
+            </p>
+            <ul>
+              <li>une page d’accueil </li>
+              <li>une page affichant un tableau contenant les résultats de l’analyse des URL collectées.</li>
+            </ul>
+
+            <p>
+              La page <strong>index.html</strong> est écrite et stylisée manuellement.
+              La page <strong>tableau-fr.html</strong> est générée automatiquement par le script
+              <strong>miniprojet.sh</strong>, qui lit une liste d’URL depuis un fichier texte, et produit un tableau résumant les informations : URL, code HTTP, encodage, nombre de mots.
+            </p>
+
+            <hr>
+
+            <a class="button is-link" href="miniprojet/tableaux/tableau-fr.html">
+              Accéder au tableau-URL
+            </a>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</body>
 </html>
