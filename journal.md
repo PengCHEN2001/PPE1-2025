@@ -50,6 +50,49 @@ CTRL+ALT+A -->creat table of content
   - [Presentation de HTML](#presentation-de-html)
   - [**Du balisage, à quoi ça ressemble ?**](#du-balisage-à-quoi-ça-ressemble-)
   - [html : creer un tableau](#html--creer-un-tableau)
+- [Seance7 HTML + CSS](#seance7-html--css)
+  - [balise](#balise)
+  - [balise](#balise-1)
+  - [Titres](#titres)
+  - [**Formattage du texte 排版**](#formattage-du-texte-排版)
+  - [Listes](#listes)
+  - [Classes](#classes)
+  - [CSS - ***Cascading Style Sheets.***](#css---cascading-style-sheets)
+  - [**Modifier le style d’une balise**](#modifier-le-style-dune-balise)
+  - [**Intégrer des éléments de style dans l’entête**](#intégrer-des-éléments-de-style-dans-lentête)
+  - [**Utiliser une feuille de style à part**](#utiliser-une-feuille-de-style-à-part)
+    - [Example **Le fichier CSS (`style.css`)**](#example-le-fichier-css-stylecss)
+    - [**Le fichier HTML (`index.html`)**](#le-fichier-html-indexhtml)
+  - [**CSS et les classes**](#css-et-les-classes)
+    - [Exemple (style.css)](#exemple-stylecss)
+    - [Exemple (index.html)](#exemple-indexhtml)
+  - [**Bulma CSS**](#bulma-css)
+    - [**Importer et utiliser Bulma**](#importer-et-utiliser-bulma)
+- [Seance7 Pages GitHub](#seance7-pages-github)
+  - [Les pages GitHub （gh-pages）](#les-pages-github-gh-pages)
+  - [Créer un site pour son dépôt](#créer-un-site-pour-son-dépôt)
+- [Seance 7+8 Regex](#seance-78-regex)
+  - [Caractères littéraux et métacaractères](#caractères-littéraux-et-métacaractères)
+    - [Caractères littéraux：](#caractères-littéraux)
+    - [**les Métacaractères devront être “échappés" pour retrouver un sens littéral**](#les-métacaractères-devront-être-échappés-pour-retrouver-un-sens-littéral)
+  - [Classes de caractères \[ \]](#classes-de-caractères--)
+  - [Métacaractères de frontières (ancres)](#métacaractères-de-frontières-ancres)
+  - [**Quantificateurs**](#quantificateurs)
+  - [Groupes et captures](#groupes-et-captures)
+  - [sed](#sed)
+- [Seance 8 Git( un peu plus loin)](#seance-8-git-un-peu-plus-loin)
+  - [GitHub : Corriger des erreurs](#github--corriger-des-erreurs)
+  - [git reset](#git-reset)
+    - [**Sans argument git reset**](#sans-argument-git-reset)
+    - [**Revenir au commit précédent : HEAD~**](#revenir-au-commit-précédent--head)
+    - [**Revenir plus loin en arrière**](#revenir-plus-loin-en-arrière)
+  - [**Git Checkout**](#git-checkout)
+  - [Travailler de manière désynchronisée et collaborative](#travailler-de-manière-désynchronisée-et-collaborative)
+  - [**Git Stash 临时把本地修改收起来**](#git-stash-临时把本地修改收起来)
+  - [RESUME](#resume)
+  - [🔹 **Git 多人协作的核心**](#-git-多人协作的核心)
+
+ [Journal de bord du projet encadré](#journal-de-bord-du-projet-encadré)
 
 
 
@@ -1185,3 +1228,645 @@ On construit un tableau HTML **ligne par ligne** avec `<tr>`, en remplissant cha
 | --- | --- |
 | Du côté de chez Swann | 1.0Mo |
 | L’Assommoir | 990 ko |
+
+# Seance7 HTML + CSS
+
+## balise<a>
+
+Ajouter les hyper liens: 
+
+- *<*a href="www.perdu.com"*>*Cliquer ici.*<*/a*>*
+
+## balise<p>
+
+La balise <p> permet de créer des paragraphes, où doit aller la majorité du texte.
+
+- *<*p*>*Du texte dans un paragraphe.*<*/p*>*
+- *<*p*>*Le paragraphe d’après.*<*/p*>*
+
+## Titres
+
+Les documents HTML ont des titres, *headings*. Ils vont du niveau 1, le plus important, au niveau 6, le
+
+moins important.
+
+<h1>…</h1>     # pour un entete de niveau 1
+
+<h6>…</h6>
+
+## **Formattage du texte 排版**
+
+- <b> pour du texte **gras**
+- <i> pour du texte *italique*
+- <em> et <strong> pour l’emphase
+
+## Listes
+
+Deux types de listes :  <ul> pour les listes à point et <ol> pour les listes numérotées.
+
+```html
+<ul>
+	<li>element 1 </li>
+	<li> element2</li>
+</ul>
+
+• 项目 1
+• 项目 2
+
+1. 项目 1
+2. 项目 2
+```
+
+## Classes
+
+Une **classe** permet de **regrouper plusieurs éléments HTML** pour leur appliquer :
+
+- les **mêmes styles CSS**,
+- ou les **sélectionner facilement** (par exemple, avec JavaScript.)
+
+Les classes sont définies manuellement, dans les feuilles de style ou directement dans la page
+
+```html
+*<*p class="text-red"*>*Du texte dans un paragraphe.*<*/p*>
+
+# Un même élément peut appartenir à plusieurs classes. Lorsque c’est le cas, les
+différentes classes sont séparées par des espaces
+<p class="boxed text-big">Le paragraphe d’après.</p>*
+```
+
+## CSS - ***Cascading Style Sheets.***
+
+CSS est un langage de style utilisé pour contrôler l’apparence et la mise en page d’une page web (HTML). On l’écrit généralement一般另外写在文件里 dans un fichier séparé .css, puis on le relie au fichier HTML à l’aide de la balise <link>.
+
+On dit qu’il est en cascade car un style appliqué à un élément s’applique naturellement à tous ses enfants
+
+Trois grandes façon d’insérer du CSS pour modifier le style d’une page web, de la plus prioritaire à la moins prioritaire
+
+- directement dans une balise
+- dans l’entête d’un fichier HTML
+- dans un fichier à part
+
+Plus de documentation :
+https://developer.mozilla.org/fr-FR/docs/Web/CSS
+
+## **Modifier le style d’une balise**
+
+On peut modifier le style d’une balise en y intégrant directement du CSS via l’attribut style.
+
+```html
+<p style="color:red; background-color:black;">
+Paragraphe rouge sur fond noir.
+</p>
+```
+
+## **Intégrer des éléments de style dans l’entête**
+
+Il est possible d’ajouter des éléments de style qui vont s’appliquer **à la page entière** en les intégrant directement dans l’entête via une balise <style>.
+On donne le tag auquel s’appliquent les éléments de style, regroupés entre "{}".
+Un élément individuel est une paire de clé-valeur séparée par ":", terminée par ";"
+
+```html
+<html>
+<head>
+	<style>
+		p {
+			color: red;
+			background-color: black;
+		}
+	</style>
+</head>
+<body>
+	<p>Je suis un paragraphe</p>
+</body>
+</html>
+```
+
+## **Utiliser une feuille de style à part**
+
+Les feuilles de style sont des fichier à l’extension .css. En supposant une architecture de fichiers suivante :
+
+```
+assets/
+  css/
+    style.css
+index.html
+```
+
+- **`style.css`** → contient toutes les règles de style CSS.
+- **`index.html`** → contient la structure HTML et fait appel au fichier CSS via `<link>`.
+
+Comment COMPRENDRE index.html? 
+
+- index.html = la page d’accueil par défaut d’un site web.
+Bien qu’elle ne soit pas strictement obligatoire, elle est fortement recommandée et presque tous les sites l’utilisent comme page principale.
+
+### Example **Le fichier CSS (`style.css`)**
+
+```css
+p {
+  color: red;
+  border: 2px solid;
+}
+
+```
+
+- **Sélecteur** : `p` → toutes les balises `<p>` du HTML.
+- **Propriétés appliquées** :
+    - `color: red;` → texte rouge
+    - `border: 2px solid;` → bordure noire de 2px autour du paragraphe
+
+⚠️ Toutes les balises `<p>` **sans style inline** hériteront de ces règles.
+
+### **Le fichier HTML (`index.html`)**
+
+```html
+<head>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <p>Je suis un paragraphe</p>
+  <p style="color:blue;">Je suis un paragraphe</p>
+</body>
+
+```
+
+- `<link rel="stylesheet" href="assets/css/style.css" />` → **connecte le fichier CSS externe** à la page HTML.    Chaque fichier **HTML** qui veut utiliser le style défini dans ton fichier CSS **doit inclure ce truc.**
+- `<p>Je suis un paragraphe</p>` → prend les **styles du CSS** : texte rouge + bordure noire.
+- `<p style="color:blue;">Je suis un paragraphe</p>` → **style inline** (`color: blue`)
+    - Priorité plus élevée que le CSS externe pour la couleur
+    - Donc texte **bleu**, bordure noire héritée du CSS externe.
+
+---
+
+1. Un fichier **`.css`** contient les styles séparés du HTML.
+2. On le relie avec `<link>` dans `<head>`.
+3. Les styles inline (`style="..."`) ont **plus de priorité** que les styles dans un fichier CSS externe.
+
+## **CSS et les classes**
+
+- Un style CSS peut s’appliquer à une **classe** avec la syntaxe :
+
+```css
+.nom-de-classe { propriété: valeur; }
+```
+
+- Tous les éléments ayant cette classe appliqueront ce style.
+
+### Exemple (style.css)
+
+```css
+.text-red { color: red; }
+.text-big { font-size: 1.5rem; }
+.boxed { border: 1px solid; }
+
+```
+
+### Exemple (index.html)
+
+```html
+<p class="text-red">Texte rouge</p>
+<p class="boxed text-big">Texte grand avec bordure</p>
+
+```
+
+- Un élément peut **avoir plusieurs classes** pour combiner les styles.
+- Cette approche est utilisée par les bibliothèques CSS comme **Bulma**.
+
+## **Bulma CSS**
+
+Bulma CSS est une librairie qui permet de styliser du HTML très facilement.
+La documentation générale est à l’adresse : https://bulma.io/documentation/
+Bulma fonctionne en attribuant des classes aux éléments HTML en fonction de nos
+besoins.
+
+### **Importer et utiliser Bulma**
+
+- On peut utiliser **toutes les fonctionnalités de Bulma** en important **un seul fichier CSS** via un CDN :
+    - Pas besoin de fichier local
+    - Chargement rapide et mise en cache（stockage temporaire des fichiers déjà vus）
+
+```html
+<html>
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css" />
+</head>
+</html>
+<section class="section column is-half is-offset-one-quarter">
+<p>Ce contenu est sur une bande faisant la moitié de la largeur de l’écran,
+centrée.</p>
+</section>
+</body>
+</html>
+```
+
+<section class="section column is-half is-offset-one-quarter"> 
+
+组合效果：Bande centrale（中央内容区） ← 网页主要内容区域, 主要显示文字、图片、卡片等宽度为屏幕一半，水平居中。
+
+<aside>
+💡
+
+- **Notions principales**
+
+Tout le style de la page va être construit en combinant
+
+**des classes** de bases correspondants à différentes sortes d’éléments typiques des pages web (titres, menu, cartes. . . )
+
+des modifieurs (qui sont aussi des classes CSS, dont le nom commence par *is-* ou *has-*) venant altérer la façon d’afficher les classes de base
+
+Ainsi il faut toujours indiquer une classe pour nos éléments html, mais cette information suffit à construire des sites au design complexe. (On peut donc presque ignorer les CSS, Bulma s’en occupe.)
+
+</aside>
+
+# Seance7 Pages GitHub
+
+## Les pages GitHub （gh-pages）
+
+GitHub Pages就是一个自动帮你把 HTML 文件变成能在互联网上访问的网站的工具。
+
+Les pages GitHub (ou gh-pages) permettent de créer et déployer un site web lié à un dépôt git.
+C’est une solution simple pour créer des sites statiques lorsqu’on en a besoin.
+Dans le cadre de ce cours, nous allons voir comment utiliser les gh-pages pour créer un site pour le projet de groupe.
+
+🌐 举个具体例子：
+
+假设你的 GitHub 仓库是
+
+👉 `https://github.com/tonNom/mon-projet`
+
+你可以通过 GitHub Pages 生成一个网站，地址可能是：
+
+👉 `https://YoannDupont.github.io/mon-projet/`
+
+当你往仓库的 `gh-pages` 分支（或 `/docs` 文件夹）里推送 HTML 文件时，GitHub 就会自动构建并发布这个网站。
+
+## Créer un site pour son dépôt
+
+Il n’y a besoin que de deux éléments pour créer un site à partir d’un dépôt GitHub :
+• un fichier index à la racine du dépôt, ici : index.html ; （这个一般不改）
+• dire à GitHub de transformer un dépôt en site.
+
+记得要在index.html上写清楚跳转链接<a href=”相对路径tableau-fr.html">Voir le tableau de résultats</a>
+
+# Seance 7+8 Regex
+
+19/11/2025
+
+Une expression régulière (regex) est une séquence de caractères qui définit un motif de recherche
+
+https://regex101.com/
+
+https://fr.wikibooks.org/wiki/Programmation_Bash/Regex
+
+https://www.baihezi.com/tech/bash/archives/regex.html
+
+## Caractères littéraux et métacaractères
+
+### Caractères littéraux：
+
+ Recherchent une correspondance exacte (ex: chat correspond à "chat").
+
+### **les Métacaractères devront être “échappés" pour retrouver un sens littéral**
+
+- .    : n’importe quel caractère (sauf nouvelle ligne)
+- *   :  zéro ou plusieurs occurrences du caractère précédent
+- +  : une ou plusieurs occurrences
+- ?   : zéro ou une occurrence
+
+## Classes de caractères [ ]
+
+Les classes de caractères permettent de spécifier un ensemble de caractères
+autorisés à une position donnée.
+
+- [abc] : correspond à "a", "b", ou "c".
+- [a-z] : correspond à n’importe quelle lettre minuscule de "a" à "z".
+- [A-Z] : correspond à n’importe quelle lettre majuscule de "A" à "Z".
+- [0-9] : correspond à n’importe quel chiffre de "0" à "9".
+- [^ ] : correspond à n’importe quel caractère **non** présent dans la classe (ex: [ˆ0-9] correspond à un caractère qui n’est pas un chiffre).
+
+<aside>
+💡
+
+exemples：
+
+- [aeiou] : correspond à une voyelle.
+- [a-zA-Z] : correspond à une lettre majuscule ou minuscule.
+- [0-9][0-9] : correspond à un nombre à deux chiffres.
+</aside>
+
+## Métacaractères de frontières (ancres)
+
+Les ancres permettent de spécifier la position d’un motif dans une chaîne de caractères
+
+- ^ : début de la chaîne (ex: ˆBonjour correspond à "Bonjour" uniquement en début de chaîne).
+- $ : fin de la chaîne (ex: au revoir$ correspond à "au revoir" uniquement en fin de chaîne).
+- \b : frontière de mot (ex: \bchat\b correspond à "chat" comme mot entier).
+- \B : absence de frontière de mot (ex: \Bachat correspond à "achat" dans "purchase")
+
+## **Quantificateurs**
+
+- * : zéro ou plusieurs occurrences
+- + : une ou plusieurs occurrences
+- ? : zéro ou une occurrence
+- {n} : exactement n occurrences
+- {n,m} : entre n et m occurrences
+
+**Exemple :**    a{2,4} correspond à "aa", "aaa", ou "aaaa"
+
+## Groupes et captures
+
+- Les parenthèses ( ) permettent de regrouper des motifs. quantificateurs s’appliquent alors à tout le groupe
+- Les captures permettent de récupérer des parties du texte :
+    - (motif) : capture le texte correspondant au motif
+    - Référence arrière : \1, \2, etc.
+- les groupes sont souvent utiliser avec l’opérateur de disjonction **|** (“ou")
+- Voir aussi :
+- les groupes non capturants (?: ... ) qui ne créent pas de référence \n
+- les *look ahead* et *look behind* qui sont non capturants et peuvent être positifs ou négatifs (*pla: ... ) (*plb: ... ) (*nla: ...) (*nlb: ... ).   Ils permettent de vérifier le contexte d’une expression sans “consommer" de caractère (comme le font les \b)
+
+notes des exo du cours 
+
+<aside>
+💡
+
+regex pour trouver tous les urls : 
+
+(https?:\/\/|www\.)([-0-9a-zA-Z]+\.)+[a-zA-Z]{2,}(\/[^\s]+)*[a-zA-Z0-9]\/?
+
+cat xxx.txt | grep -P ‘(https?:\/\/|www\.)([-0-9a-zA-Z]+\.)+[a-zA-Z]{2,}(\/[^\s]+)*[a-zA-Z0-9]\/?’
+
+ 这样会把匹配到的内容的一整行都显示出来
+
+DONC, 
+
+cat xxx.txt | grep -P ‘(https?:\/\/|www\.)([-0-9a-zA-Z]+\.)+[a-zA-Z]{2,}(\/[^\S]+)*[a-zA-Z0-9]\/?’ -o
+
+-P 使用 **Perl 兼容正则表达式（PCRE, Perl Compatible Regular Expressions）**
+
+-E 使用 **扩展正则表达式（ERE, Extended Regular Expressions）**
+
+[aA-zZ]* 表示的是 正则会按 **ASCII 顺序** 匹配从 `a` 到 `z` 的所有字符，**同时包括了中间的特殊符号**。
+
+</aside>
+
+\p{ll*}
+
+\p{lo*} o表示autre
+
+\p{han}
+
+- `\p{…}` 表示匹配某种 Unicode 属性的字符
+- `Ll` 是 **Letter, lowercase** 的缩写 Lu upper case
+
+把txt的所有单词都摘出来 cat xxx.txt | grep -P ‘\p{lu}\p{ll}+’ -o
+
+grep “xxx” -color
+
+## sed
+
+```bash
+sed [options] 'script' inputfile
+```
+
+- `script` 可以是：
+    - 单个命令：`'s/foo/bar/'`
+    - 多个命令：`e 'cmd1' -e 'cmd2'`
+- 常用选项：
+    - `n` → 不自动打印输出，只打印显式 `p` 的行
+    - `i` → 直接修改文件（in-place）
+    - `r` / `E` → 扩展正则（ERE）
+
+---
+
+常用命令
+
+替换（Substitute）
+
+```bash
+sed 's/old/new/' file
+```
+
+- `s` → substitute
+- `/old/` → 匹配模式
+- `/new/` → 替换内容
+- 默认只替换每行 **第一次匹配**
+- 加 `g` → 替换行中 **所有匹配**
+
+cat xxx.txt |grep moulins | sed ‘s/moulins \(…\)/ \1 MOULINS/’ 
+
+<aside>
+💡
+
+模式部分：`moulins \(…\)`
+
+- `moulins` → 匹配字面字符串 `moulins`
+- `\(...\)` → **捕获组**，把里面的内容记住，后面用 `\1` 引用
+- `…` → 这里是特殊符号，通常表示你要捕获的内容（实际用法可能是 `.*`，表示任意字符）
+
+所以它的意思：
+
+> 找到 moulins，然后紧跟着某个内容，把这个内容捕获到 \1。
+> 
+
+ 替换内容：`\1 MOULINS`
+
+- `\1` → 上面捕获的组
+- `MOULINS` → 把它追加在捕获内容后面
+- 总体效果：**把原来的 `moulins xxx` 变成 `xxx MOULINS`**
+</aside>
+
+# Seance 8 Git( un peu plus loin)
+
+Apprendre à corriger des erreurs en git
+Apprendre à gérer certains conflits
+
+## GitHub : Corriger des erreurs
+
+qq commandes pour cela
+
+- git reset : voir l’explication detaille ci-dessous
+- git revert → pas cette fois !
+- git stash
+- git checkout → on le (re?)verra au S2
+- git fetch : récupérer des métadonnées du dépôt.
+
+<aside>
+💡
+
+Quelques éléments à savoir avant de continuer :
+
+les arguments pour les commandes
+• HEAD : représente le commit sur lequel vous êtes en train de travailler
+• tag : représente le commit sur lequel on a placé l’étiquette
+• ~N: représente l’ascendance directe de votre commit (linéaire, par défault N=1 représente le commit parent)
+• ^N : représente le n-ième parent du commit (non linéaire, par défault N=1  représente le commit parent)
+
+source: https://git-scm.com/docs/git-rev-parse
+
+</aside>
+
+## git reset
+
+https://til.bhupesh.me/git/how-to-undo-anything-in-git
+
+git reset 回到指定 commit。想撤销多少次 commit，就指定回到哪里。
+
+不带参数只取消 add，--soft 保留 staging，--mixed 清除 staging，--hard 清除全部。
+
+### **Sans argument git reset**
+
+- Annule tous les `git add` (vide l’index / staging也就是清空暂存区)
+- Ne modifie pas les commits
+- Ne modifie pas les fichiers de la working directory
+
+---
+
+### **Revenir au commit précédent : HEAD~**
+
+- **git reset HEAD~**
+    - Revient撤销 au commit précédent
+    - **Annule le staging 取消暂存**
+    - Garde les modifications dans les fichiers
+- **git reset --soft HEAD~**
+    - Revient au commit précédent
+    - **Ne vide pas le staging**
+    - Garde les modifications dans les fichiers
+
+---
+
+### **Revenir plus loin en arrière**
+
+Pour annuler plusieurs commits, il faut viser explicitement un commit :
+
+- git reset <commit>
+
+Où `<commit>` peut être :
+
+- l’identifiant SHA du commit
+- un tag
+- `HEAD~N` (ancêtre linéaire) N=3就是回到3次提交前
+- `HEAD^N` (N-ième parent, utile pour les merges)
+
+---
+
+<aside>
+💡
+
+**Attention : git reset fonctionne sur des commits entiers, pas sur des fichiers spécifiques. 它不能只 reset 一个文件**
+
+</aside>
+
+| Option | Commits | Staging | Fichiers |
+| --- | --- | --- | --- |
+| `--soft` | déplacé | conservé | conservés |
+| `--mixed` *(par défaut)* | déplacé | vidé | conservés |
+| `--hard` | déplacé | vidé | remis à l’état du commit |
+
+---
+
+## **Git Checkout**
+
+git reset  **撤销提交**，修改 **提交历史（commit 历史）**，可以让 HEAD 回到以前的 commit
+
+git checkout **查看或切换到某个历史状态”**，主要用于浏览或恢复文件，不一定改变提交历史。
+
+- `git checkout <commit>` → revenir à l’état d’un commit pour tout le dépôt
+    - <commit> 可以是SHA，tag, branche(e.g.main)
+    - 执行后，整个仓库会回到该 commit 的状态
+    - 如果不加 commit，则默认回到 `HEAD`（当前分支的最新提交）
+- `git checkout <fichier>` → revenir à l’état du fichier dans HEAD
+- `git checkout <commit> -- <fichier>` → revenir à l’état du fichier dans un commit précis
+- Sans argument → montre juste les fichiers modifiés
+
+---
+
+## Travailler de manière désynchronisée et collaborative
+
+- Dans Git, plusieurs personnes peuvent modifier le dépôt en même temps.
+- Pour **pousser** ses modifications sur le dépôt en ligne, il faut être à jour.
+- Si tu n’es pas à jour, Git **refuse la modification**.
+
+**Mise à jour depuis le dépôt distant : git pull**
+
+⚠️ Peut échouer si des **conflits** existent (fichiers modifiés en local et en ligne).
+
+## **Git Stash 临时把本地修改收起来**
+
+`git stash` permet de sauvegarder ses modifications avant un pull ou un reset.
+
+- **Mettre de côté** les modifications :
+    
+    Permet de **sauvegarder temporairement des changements** pour travailler proprement.
+    
+
+```bash
+git stash push [-m <message>]
+
+-m <message> : description du stash
+Chaque appel crée une nouvelle entrée
+```
+
+- **Voir les stashes** :
+
+```bash
+git stash list  : Affiche la liste des modifications mises de côté
+git stash show [-p] <stash>
+
+-p : affiche un diff
+<stash> : identifiant du stash (souvent un index, ex: stash@{0})
+
+```
+
+- **Réappliquer un stash** :
+
+```bash
+git stash apply <stash>   # conserve le stash
+git stash pop <stash>     # supprime après application
+git stash drop <stash>    # supprimer manuellement
+#
+git stash pop ⇔ git stash apply + git stash drop
+apply : applique le stash sans le supprimer
+pop : applique le stash et le supprime
+
+```
+
+---
+
+## RESUME
+
+<aside>
+💡
+
+## 🔹 **Git 多人协作的核心**
+
+1. **每个人都有自己的本地仓库**
+- 在 Git 中，每个人的仓库都是完整的副本
+- 你可以在本地自由修改、提交，不会影响别人
+1. **远程仓库是“共享中心”**
+- 远程仓库（比如 GitHub、GitLab）是大家同步代码的地方
+- 只有把修改 push 到远程，别人才能看到你的改动
+1. **必须基于最新版本工作**
+- 在多人协作时，如果你的本地不是最新版本（别人已经 push 了新的修改），Git 会拒绝 push
+- 原因：防止你把别人新改动覆盖掉
+1. **获取最新版本** git pull
+- 把远程仓库的最新改动拉到本地
+- 如果你本地也改了同一个文件，就会出现 **冲突（conflict）**
+- 注意git fetch = 只下载，不合并，下载远程更新到**本地远程分支**（不动本地分支）
+- pull = fetch + merge
+1. **冲突处理**
+- 如果冲突发生，Git 会标记出冲突文件
+- 你必须手动解决冲突，然后再 commit
+1. **保护修改的方法：git stash**
+- 有时候你本地有修改，但想先 pull 或切换分支
+- 可以用 `git stash` 暂存本地的修改在STASH里面，清空工作区
+- 这个时候pull就没问题 把远程最新修改合并到本地
+- PULL完或者切换回分支后，再用 `git stash pop` 恢复修改
+- 现在工作区有两部分内容：
+    1. pull 下来的远程修改（已经在本地）
+    2. stash pop 恢复的本地修改
+- 如果本地修改和远程修改改了同一行或相邻代码，Git 就无法自动合并 → **冲突发生**
+- **冲突只存在本地**，远程仓库还没改动
+- 这时候你必须在本地解决冲突，然后 commit，再 push
+- 这样可以**避免丢失未完成的工作**
+</aside>
+
