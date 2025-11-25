@@ -89,8 +89,17 @@ CTRL+ALT+A -->creat table of content
   - [**Git Checkout**](#git-checkout)
   - [Travailler de manière désynchronisée et collaborative](#travailler-de-manière-désynchronisée-et-collaborative)
   - [**Git Stash 临时把本地修改收起来**](#git-stash-临时把本地修改收起来)
-  - [RESUME](#resume)
-  - [🔹 **Git 多人协作的核心**](#-git-多人协作的核心)
+  - [RESUME  (version final)](#resume--version-final)
+  - [**RESUME : Git 多人协作核心笔记**](#resume--git-多人协作核心笔记)
+  - [1️⃣ 本地仓库与远程仓库](#1️⃣-本地仓库与远程仓库)
+  - [2️⃣ 获取最新版本 git pull](#2️⃣-获取最新版本-git-pull)
+  - [3️⃣ 冲突处理（工作区有修改时）](#3️⃣-冲突处理工作区有修改时)
+  - [4️⃣ 冲突处理（已 commit，但 push 失败）](#4️⃣-冲突处理已-commit但-push-失败)
+    - [**方案 1：pull 并 rebase（推荐）**](#方案-1pull-并-rebase推荐)
+    - [**方案 2：reset 到工作区，再 pull**](#方案-2reset-到工作区再-pull)
+    - [**方案 3：pull merge（不 rebase）**](#方案-3pull-merge不-rebase)
+    - [**选择原则**](#选择原则)
+  - [5️⃣ stash 的作用（可选）](#5️⃣-stash-的作用可选)
 
  [Journal de bord du projet encadré](#journal-de-bord-du-projet-encadré)
 
@@ -1834,41 +1843,139 @@ pop : applique le stash et le supprime
 
 ---
 
-## RESUME
+## RESUME  (version final)
 
 <aside>
-💡
 
-## 🔹 **Git 多人协作的核心**
+## **RESUME : Git 多人协作核心笔记**
 
-1. **每个人都有自己的本地仓库**
-- 在 Git 中，每个人的仓库都是完整的副本
-- 你可以在本地自由修改、提交，不会影响别人
-2. **远程仓库是“共享中心”**
-- 远程仓库（比如 GitHub、GitLab）是大家同步代码的地方
-- 只有把修改 push 到远程，别人才能看到你的改动
-3. **必须基于最新版本工作**
-- 在多人协作时，如果你的本地不是最新版本（别人已经 push 了新的修改），Git 会拒绝 push
-- 原因：防止你把别人新改动覆盖掉
-4. **获取最新版本** git pull
-- 把远程仓库的最新改动拉到本地
-- 如果你本地也改了同一个文件，就会出现 **冲突（conflict）**
-- 注意git fetch = 只下载，不合并，下载远程更新到**本地远程分支**（不动本地分支）
-- pull = fetch + merge
-5. **冲突处理**
-- 如果冲突发生，Git 会标记出冲突文件
-- 你必须手动解决冲突，然后再 commit
-6. **保护修改的方法：git stash**
-- 有时候你本地有修改，但想先 pull 或切换分支
-- 可以用 `git stash` 暂存本地的修改在STASH里面，清空工作区
-- 这个时候pull就没问题 把远程最新修改合并到本地
-- PULL完或者切换回分支后，再用 `git stash pop` 恢复修改
-- 现在工作区有两部分内容：
-    1. pull 下来的远程修改（已经在本地）
-    2. stash pop 恢复的本地修改
-- 如果本地修改和远程修改改了同一行或相邻代码，Git 就无法自动合并 → **冲突发生**
-- **冲突只存在本地**，远程仓库还没改动
-- 这时候你必须在本地解决冲突，然后 commit，再 push
-- 这样可以**避免丢失未完成的工作**
+## 1️⃣ 本地仓库与远程仓库
+
+- 每个人都有完整的本地仓库，可以自由修改、提交，不影响别人。
+- 远程仓库（GitHub/GitLab）是共享中心，push 后别人才能看到你的修改。
+- **必须基于最新版本工作**：
+    - 如果本地不是最新版本（别人已经 push 了修改），Git 会拒绝 push
+    - 避免覆盖别人修改
+
+---
+
+## 2️⃣ 获取最新版本 git pull
+
+- 拉取远程最新修改并合并到本地
+- `git fetch` = 只下载远程更新到 **本地远程分支**（不动本地分支）
+- `git pull` = `fetch + merge`
+
+---
+
+## 3️⃣ 冲突处理（工作区有修改时）
+
+- 如果你修改了文件但 **还没 commit**，pull 时可能出现冲突
+- Git 会在文件里标记冲突：
+
+```
+<<<<<<< HEAD
+远程修改
+=======
+本地修改
+>>>>>>> branch
+```
+
+- **冲突只存在本地**
+- 解决方法：
+    1. 打开文件手动修改，删除冲突标记，保留最终内容
+    2. `git add <file>` 标记解决
+    3. `git commit` 提交
+    4. `git push` 上传
+
+> ⚡ 对于未 commit 修改，不需要 stash，可以直接在文件里解决冲突
+> 
+
+---
+
+## 4️⃣ 冲突处理（已 commit，但 push 失败）
+
+当你已经 commit，但 push 失败（本地分支和远程分支 diverged）：
+
+### **方案 1：pull 并 rebase（推荐）**
+
+```bash
+git pull --rebase
+
+```
+
+- 将远程 commit 暂存，放到本地 commit 前
+- 出现冲突 → 手动修改 → `git add` → `git rebase --continue`
+- 完成后 `git push`
+
+✅ 优点：历史干净，保留本地 commit
+
+---
+
+### **方案 2：reset 到工作区，再 pull**
+
+```bash
+git reset HEAD~1   # 最近 commit 退回到工作区修改
+```
+
+- 工作区恢复未提交状态
+- 可选择 `git stash` 暂存（可选）
+- `git pull` 拉取远程修改
+- `git stash pop` 恢复修改（如使用 stash）
+- 解决冲突 → commit → push
+
+✅ 优点：安全，不修改 commit 历史
+
+⚠️ 缺点：步骤多
+
+---
+
+### **方案 3：pull merge（不 rebase）**
+
+```bash
+git pull --no-rebase
+```
+
+- Git 自动生成 merge commit
+- 出现冲突 → 手动修改 → `git add` → `git commit` → push
+
+✅ 优点：操作简单
+
+⚠️ 缺点：会生成 merge commit，历史不够干净
+
+---
+
+### **选择原则**
+
+| 情况 | 推荐方案 |
+| --- | --- |
+| 本地 commit 少，希望历史直线化 | 方案 1：pull --rebase |
+| commit 多，修改复杂，想安全处理 | 方案 2：reset + stash（可选） + pull + pop |
+| 不在意 merge commit | 方案 3：pull --no-rebase |
+
+---
+
+## 5️⃣ stash 的作用（可选）
+
+- stash 主要用于 **临时保存未提交修改**，清空工作区：
+    - 想安全 pull 或切换分支时
+    - 工作区修改多、担心冲突破坏工作区
+- 对于已经 commit 或修改少的情况，**stash 可省略**
+- 使用方法：
+
+```bash
+git stash       # 暂存工作区修改
+git pull        # 拉取远程修改
+git stash pop   # 恢复修改
+```
+
+- 如果出现冲突 → 手动解决 → add → commit → push
+
+---
+
+✅ **总结**
+
+1. **未 commit 修改** → pull 出现冲突 → 直接手动修改即可，不必 stash
+2. **已 commit，但 push 失败** → 可选择 rebase、reset 或 merge 处理
+3. **stash 只是保护工作区修改的手段**，不是必须
 </aside>
 
