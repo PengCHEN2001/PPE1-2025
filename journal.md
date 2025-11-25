@@ -51,10 +51,10 @@ CTRL+ALT+A -->creat table of content
   - [**Du balisage, à quoi ça ressemble ?**](#du-balisage-à-quoi-ça-ressemble-)
   - [html : creer un tableau](#html--creer-un-tableau)
 - [Seance7 HTML + CSS](#seance7-html--css)
-  - [balise](#balise)
-  - [balise](#balise-1)
+  - [Balise `<a>`](#balise-a)
+  - [Balise `<p>`](#balise-p)
   - [Titres](#titres)
-  - [**Formattage du texte 排版**](#formattage-du-texte-排版)
+  - [Formattage du texte (排版)](#formattage-du-texte-排版)
   - [Listes](#listes)
   - [Classes](#classes)
   - [CSS - ***Cascading Style Sheets.***](#css---cascading-style-sheets)
@@ -1231,38 +1231,40 @@ On construit un tableau HTML **ligne par ligne** avec `<tr>`, en remplissant cha
 
 # Seance7 HTML + CSS
 
-## balise<a>
+## Balise `<a>`
 
-Ajouter les hyper liens: 
+Ajouter les hyperliens :
 
-- *<*a href="www.perdu.com"*>*Cliquer ici.*<*/a*>*
+- `<a href="www.perdu.com">Cliquer ici.</a>`
 
-## balise<p>
+## Balise `<p>`
 
-La balise <p> permet de créer des paragraphes, où doit aller la majorité du texte.
+La balise `<p>` permet de créer des paragraphes, où doit aller la majorité du texte.
 
-- *<*p*>*Du texte dans un paragraphe.*<*/p*>*
-- *<*p*>*Le paragraphe d’après.*<*/p*>*
+- `<p>Du texte dans un paragraphe.</p>`
+- `<p>Le paragraphe d’après.</p>`
 
 ## Titres
 
-Les documents HTML ont des titres, *headings*. Ils vont du niveau 1, le plus important, au niveau 6, le
+<aside>
+💡
 
-moins important.
+Les documents HTML ont des titres, *headings*. Ils vont du niveau 1 au niveau 6.
 
-<h1>…</h1>     # pour un entete de niveau 1
+- `<h1>…</h1>` pour un entete de niveau 1
+- `<h6>…</h6>` pour un entete de niveau 6
 
-<h6>…</h6>
+</aside>
 
-## **Formattage du texte 排版**
+## Formattage du texte (排版)
 
-- <b> pour du texte **gras**
-- <i> pour du texte *italique*
-- <em> et <strong> pour l’emphase
+- `<b>` pour du texte gras
+- `<i>` pour du texte italique
+- `<em>` et `<strong>` pour l’emphase
 
 ## Listes
 
-Deux types de listes :  <ul> pour les listes à point et <ol> pour les listes numérotées.
+Deux types de listes : `<ul>` pour les listes à point et `<ol>` pour les listes numérotées.
 
 ```html
 <ul>
@@ -1321,7 +1323,7 @@ Paragraphe rouge sur fond noir.
 
 ## **Intégrer des éléments de style dans l’entête**
 
-Il est possible d’ajouter des éléments de style qui vont s’appliquer **à la page entière** en les intégrant directement dans l’entête via une balise <style>.
+Il est possible d’ajouter des éléments de style qui vont s’appliquer **à la page entière** en les intégrant directement dans l’entête via une balise `<style>`.
 On donne le tag auquel s’appliquent les éléments de style, regroupés entre "{}".
 Un élément individuel est une paire de clé-valeur séparée par ":", terminée par ";"
 
